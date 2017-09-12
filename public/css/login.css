@@ -1,0 +1,181 @@
+
+
+body{
+    font-size: 1.3em;
+    background-image: url(../img/login.jpg) ;
+}
+
+
+input{
+    font-size: 1.5em;
+}
+
+img{
+    max-width:300px;
+}
+
+.reg-tick{
+    height :20px;
+    width:20px;
+}
+
+.title-img{
+    margin-top:5%;
+}
+
+#captchaImg:hover{
+    cursor:pointer;
+}
+
+#text-reg{
+    position: relative;
+    font-size: 16vmin;
+    left:20%;
+    top :20%;
+    text-shadow: 5px 5px 7px rgba(150, 150, 150, 1);
+}
+
+#panel-reg-success{
+    position:absolute;
+    left:25%;
+    top:20%;
+    height:40%;
+    width:20%;
+    background-color: rgba(189, 195, 199,1.0) !important;
+    box-shadow:0px 0px 50px black;
+}
+
+#panel-reg-success p{
+    font-size:1.5em;
+    text-align:center;
+}
+
+#panel-reg-success input{
+    font-size:1.3em;
+    height:15%;
+    width:50%;
+    margin-bottom:40px;
+}
+
+.mobileLogin{
+    visibility:hidden;
+}
+
+.mobileRegister{
+    visibility:hidden;
+}
+@media screen and (max-width: 1155px) {
+    .panel{
+        display:none;
+    }
+    
+    #right-panel, .trans-panel{
+        left:25%;
+    }
+    
+}
+@media screen and (max-width: 768px) {
+    
+    body{
+        margin:0px  !important;
+        border-top:8px solid #27ae60;
+        font-family: "malgun gothic", simhei !important;
+    }
+#left-panel, #right-panel, .trans-panel, .panel{
+   display:none !important;
+}
+.regSuccessMobile{
+    border-top:8px solid #27ae60;
+     display:block !important;
+     position:fixed !important;
+     padding:5px;
+     margin:auto 0px;
+     width:100% !important;
+     left:0px !important;
+}
+.regSuccessMobile p{
+    font-size:3em !important;
+}
+.regSuccessMobile input{
+    width:100%;
+}
+.mobileLogin{
+    visibility:visible;
+    margin:0px 5%;
+    text-align:center;
+    font-size:1.8em;
+}
+.mobileLogin h4{
+    text-align:center;
+}
+.mobileLoginButton{
+    width:100%;
+    margin:20px 0px !important;
+}
+.mobileLogin form, .mobileRegister form{
+    margin:0px 10%;
+}
+.input-group{
+    margin:5px 0px;
+    
+}
+.mobileLogin img{
+    max-width:100% !important;
+    margin:10% 0px;
+}
+
+.mobileRegister{
+    visibility:visible;
+}
+.mobileRegister form{
+    color:red;
+}
+.mobileRegister form h4{
+    color:black;
+}
+.mobileRegister form h5{
+    text-align:center;
+    color:black;
+}
+
+h4{
+    float:left;
+}
+
+.reg-tick-mobile{
+    height :20px;
+    width:20px;
+    float:left;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+}
+
+.notuse
+{
+    display:none;
+}
+
+.panel {
+	width: 46%;
+	float: left;
+	height: 100%;
+}
+
+.trans-panel {
+	position: relative;
+	border-radius: 5px;
+	top: 50px;
+	background: rgba(189, 195, 199, 0.55);
+	padding: 3% 5%;
+	min-height: 30%;
+	float: left;
+	min-width: 35%;
+	border-top: 8px solid #27ae60;
+	box-shadow: 0px 0px 20px rgba(189, 195, 199, 0.55);
+}
+
+.trans-panel input[type='text'] {
+	border-radius: 3px;
+}

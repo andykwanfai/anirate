@@ -1,0 +1,156 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(meta name="viewport" content="width=device-width, initial-scale=1")
+    title=title
+    link(rel='stylesheet', type='text/css', href='../css/main.css')
+    link(rel='stylesheet', type='text/css', href='../css/bangumi.css')
+    link(rel='stylesheet', type='text/css', href='../css/tooltipster.css')
+    link(rel='stylesheet', type='text/css', href='../css/header.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
+    script(src='../js/anime-page.js')
+    script(type='text/javascript', src='../js/heading.js')
+    script(type='text/javascript', src="../js/search-test.js")
+    script(src="../js/typeahead.min.js")
+    script(type='text/javascript', src='../js/chart.js')
+    script(type="text/javascript", src="../js/flot/jquery.flot.min.js")
+    script(type='text/javascript', src='../js/jquery.tooltipster.min.js')
+    script(type='text/javascript', src='../js/tooltip.js')
+    
+    link(rel='stylesheet', media="only screen and (max-width: 768px)", type='text/css', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    
+    script(type='text/javascript').
+       var episode=!{JSON.stringify(episodes)}
+
+  body
+    header
+    div(ng-app='main', ng-controller='anime-ctrl')
+      header(ng-controller='headerCtrl')
+        div(ng-include="'/html/header.html'")
+      #mainContainer
+        #info-panel
+          .animeTopContainer
+            .imgCrop2
+              img.poster(src=img_path, alt=title)
+            h1#title=title
+            p.jtitle #{jname}
+          p#description 簡介:  !{description}
+          p#type 類型 :
+            each e in types
+              a.tag(href='/search/type/' +　e.type) !{e.type}
+          p#tag Tag:  
+              span(ng-repeat='t in tags| filter:{bam : 0}' class='tag')
+                a(title='共有 {{t.vote}} 人讚好' ng-href='/search/tag/{{t.tag}}') {{t.tag}}&nbsp;
+                  img(title='已讚' class='thumb' src='../img/thumb_red.png' ng-show='t.uid != null')
+                img(title='讚好' class='thumb' src='../img/thumb.png' ng-show='t.uid == null && logged' onmouseover='onEnterThumb(this)' onmouseout='onLeaveThumb(this)' ng-click='voteTag(t.id)')
+              input(type='text' id='input-tag', ng-show='editingTag && !addedTag' name='input-tag' ng-model='newTag')
+              span(class='new-tag addTagTooltip', ng-show='logged && !addedTag' ng-click='onClickNewTagButton()') {{getNewTagButtonText()}}
+              span(class='new-tag', ng-show='!tagEnded', ng-click='expandTag = true; tagEnded = true;getTags()') 更多
+              
+          ul#staff Staff:
+            each item in staff
+                li !{item.role}：
+                  a(href="/staff/"+item.id) !{item.name}
+          ul#cv Cast:
+              each item in cv
+                li !{item.role}：
+                  a(href="/cv/"+item.cvid) !{item.cvname}
+        #vote-panel
+        h2 評分區
+          img(id='button-chart' class="tooltip" src='/img/icon-chart.png' title="打開圖表" ng-click='showDialog = 3;')
+          hr
+          table
+            if episodes!=null
+              tr
+                th 
+                  集數
+                  br
+                  分數
+                each epi in episodes
+                    if(epi.rated)
+                      td
+                        .episode-sq-voted(class="tooltip" title="更改評分" ng-click='showDialog = 1; mode = 0; selectEpisode = ' + epi.episode + '; selectEpisodeName = "' + epi.name + '"') 
+                          span !{epi.name}
+                        .score-sq !{epi.rating}
+                    else
+                      td
+                        .episode-sq(class="tooltip rate-button" title="點擊評分" ng-click='showDialog = 1; mode = 0; selectEpisode = ' + epi.episode+ '; selectEpisodeName = "' + epi.name + '"') 
+                          span !{epi.name}
+                        .score-sq !{epi.rating}
+            tr
+              td
+                if(overall_rating_rated)
+                  .episode-rect-voted(ng-click='showDialog = 1; mode = 1', ng-show = episodes.length + '==' + total_episode ) 整體評分
+                else
+                  .episode-rect(ng-click='showDialog = 1; mode = 1', ng-show = episodes.length + '==' + total_episode ) 整體評分
+                .score-rect(ng-show = episodes.length + '==' + total_episode) !{overall_rating}
+        h2#button-comment 評論區
+        input(type='button', ng-show='logged', ng-click='showDialog = 2' value='留言') 
+        hr
+        #comment-panel
+          p.title(ng-show='commentList.length == 0') 目前仍未有評論
+          .comment-block(ng-repeat='e in commentList' ng-click='showSpoiler(e.seq)')
+            .comment-content(ng-show='e.spoiler == 0')
+              p.authur-name 
+                img.membericon(ng-src='{{e.icon}}' alt="Can't see shit")
+                | {{e.uname}}
+                span.post-date {{convertDataString(e.post_date)}}
+              p.comment-content {{e.content}}
+            .comment-spoiler(ng-show='e.spoiler == 1')
+              | {{e.uname}} --- 此留言可能含有劇透 請點擊觀看
+          input(type='button', ng-show='!commentEnded', ng-click='showMore()',value='展開')
+          
+      // Main Page End
+      
+      //chart dialog
+      #chart.dialog-long(class='chart' ng-show='showDialog == 3')
+        .dialog-header
+          |#{title}
+          input( type='button' class='red' ng-click='showDialog = 0' value="X")
+        #chart-body.dialog-body
+          #chart-holder
+          p#choices
+      
+      // Vote Dialog Start
+      #vote-dialog.dialog(ng-show='showDialog == 1 && logged')
+        .dialog-header
+          img(src='../img/logo/logo6.png')
+          | 評分
+          input( type='button' class='red' ng-click='showDialog = 0' value="X")  
+        #vote-body.dialog-body
+          img.poster(src=img_path, alt=title)
+          #voting-form
+            p.dialog-body-title !{title}
+            p {{(mode == 0 ? '第 ' + selectEpisodeName + ' 話' : '整體評分')}}
+            select(name='score',ng-model='selectedOption',ng-options='m.name for m in options')
+            input.large(type='button', value='提交' ng-click="vote()" ng-disabled = '!selectedOption.name')
+      // Vote Dialog End
+      // Vote Dialog Start
+      #vote-login-dialog.dialog(ng-show='showDialog == 1 && !logged')
+        .dialog-header
+          img(src='../img/logo/logo6.png')
+          | 評分
+          input( type='button' class='red' ng-click='showDialog = 0' value="X")
+        .dialog-body
+          p 請先登入
+          input( type='button' class='large' ng-click='toLoginPage()' value = '登入') 
+      // Vote Dialog End
+      // Comment Dialog Start
+      #comment-dialog.dialog(ng-show='showDialog == 2 && logged')
+        .dialog-header
+          img(src='../img/logo/logo6.png')
+          | 留言
+          input( type='button' class='red' ng-click='showDialog = 0' value="X")
+        .dialog-body
+          p.title 內容
+          form(action='', name='commentForm')
+            textarea(rows='4' ng-model='commentContent')
+            br
+            label
+              input(type='checkbox' ng-model='asSpoiler') 
+              內容含有劇透
+            input.large(value='發表', type='button' ng-click='postComment()' ng-disabled = '!commentContent')
+      // Comment Dialog End

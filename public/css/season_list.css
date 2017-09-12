@@ -1,0 +1,197 @@
+html,body,#main{
+    height:100%;
+}
+
+@media (max-width: 768px) {
+    #season-list-content{
+        height:100%;
+    }
+    ul#list {
+    width: 100%;
+}
+	#season-list-content {
+		font-size: 1.8em;
+		background-color: transparent !important;
+		height: 100% !important;
+		padding: 0px !important;
+		width: 100% !important;
+	}
+	#season-list-content h1,
+	.mainContainer h2 {
+		font-size: 2em;
+		margin: 0px !important;
+		text-align: center !important;
+	}
+	#sort-menu{
+	    width:200px;
+	}
+	#sort {
+		right: 100px;
+		box-shadow: 0px 0px 20px grey;
+		z-index: 2 !important;
+		cursor: pointer;
+	}
+	.item {
+		border-radius: 3px;
+		opacity: 0.9;
+		background-color: white;
+		box-shadow: 0px 0px 10px grey;
+		min-height: 120px;
+		margin: 2px;
+		width: 100% !important;
+	}
+}
+
+
+#season-list-content{
+   
+    min-height:500px;
+	padding:30px;
+	background-color:rgba(189, 195, 199,0.5);
+}
+
+header{
+    width:100%;
+	height:auto;
+}
+
+#season-title{
+    float:left;
+}
+
+.item{
+    width: 250px;
+    float: left;
+    padding: 5px;
+}
+
+.item img{
+    margin: 5px;
+    float: left;
+    max-height:128px;
+}
+
+.item img:hover{
+    
+}
+
+input[type=button]{
+    padding:0px;
+}
+
+
+input[type=button].expand{
+    display:inline-block;
+    width:50px;
+    height:50px;
+    clear:both;
+    margin:0px 0px 0px 10px;
+    font-size:1em;
+}
+
+.title{
+    font-size:1.75em;
+    clear:both;
+}
+
+#sort{
+    display: inline-block;
+    margin:0px 5px 20px 0px;
+}
+#sort-menu{
+    display: none;
+    position: fixed;
+   
+}
+
+#sort-option{
+    float: right;
+}
+
+.arrow{
+    width:32px;
+    cursor: pointer;
+    margin:0px 3px;
+}
+.arrow:hover{
+    opacity:0.9;
+}
+#sort{
+	display:inline-block;
+	border:1px solid #95a5a6;
+	border-radius:3px;
+	font-size:1.2em;
+	padding: 2px 8px;
+	background-color:#bdc3c7;
+	margin-left:5px;
+	vertical-align: middle;
+	line-height: normal;
+}
+
+#sort:hover{
+    background-color:#C4C9CD;
+}
+
+#sort span{
+    color: #2C3E50;
+    cursor: pointer;
+}
+
+#sort span:hover{
+    color: #415162;
+}
+
+#sort-menu{
+    z-index: 100;
+    cursor: pointer;
+	background-color: white;
+	border-bottom: 3px solid rgba(39, 174, 96, 1.0);
+	color: grey;
+	padding: 10px;
+	border-radius: 0px 0px 3px 3px;
+	margin: 0px;
+	position: absolute !important;
+}
+
+#season-list-content ul li{
+    font-size:0.85em;
+   text-align:left;
+ 
+}
+
+.seasonInfo{
+    height:160px;
+}
+
+.seasonTitle{
+    height:28%;
+    position:relative;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.seasonitem{
+    background-color:#e1e1e1;
+   margin:5px;
+    opacity:0.9;
+    transition: all 0.2s ease;
+}
+
+.seasonitem:hover, .allseasonInfo:hover{
+    opacity:1;
+    box-shadow:0px 0px 10px grey;
+     transform:scale(1.05);
+}
+
+.allseasonInfo{
+   background-color:#e1e1e1;
+   margin:5px;
+}
+
+.allSeasonTitle{
+    margin:15px 0px;
+}
+
+.expand {
+	background-color: #19b698 !important;
+}

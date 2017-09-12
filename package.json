@@ -1,0 +1,23 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "express": "*",
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "morgan": "*",
+    "serve-favicon": "*",
+    "debug": "*",
+    "jade": "*",
+    "mysql": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-flash": "*",
+    "express-session": "*",
+    "connect-redis": ""
+  }
+}

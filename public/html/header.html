@@ -1,0 +1,105 @@
+
+<!--mobile ver header
+
+<script type="text/javascript" src="../js/typeahead.min.js"></script>
+<script type="text/javascript" src="../js/search-test.js"></script>
+
+<script type="text/javascript" src="/js/typeahead.min.js"></script>
+<script type="text/javascript" src="/js/search-test.js"></script>
+-->
+
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+     <div class="container-fluid" id="navfluid">
+       <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+       <span class="sr-only">Toggle navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+      </button>
+     <a class="navbar-brand" href="/">
+        <img alt="Brand" src="/img/logo/logo6.png">
+      </a>
+    </div>
+<div class="collapse navbar-collapse" id="navigationbar">
+<ul class="nav navbar-nav">
+   <li><a ng-show="username == ''" href="/login/">登入</a></li>
+   <li><a ng-show="username == ''" href="/login/reg-page">註冊</a></li>
+    <li class="dropdown">
+          <a href="#" ng-show="username != ''" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">歡迎, {{username}}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  href="/profile">個人檔案</a></li>
+          </ul>
+     </li>    
+    <li><a ng-show="username != ''" href="/login/logout">登出</a></li>
+    <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">季度<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a ng-href="/season/{{e.dateurl}}" target="_self" ng-repeat='e in currentSeason'>{{e.datestring}}</a></li>
+            <li><a href="/season/all-season" target="_self">所有季度</a></li>
+          </ul>
+     </li>
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">搜尋<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+              <form class="navbar-form navbar-left" role="search" onsubmit='searching()'>
+                <div class="form-group">
+                  <select name="search" class="span2 navbar-btn mobileSelect form-control" name="search" id='searchOpt'>
+                    <option value='0'>動畫</option>
+                    <option value='1'>聲優</option>
+                    <option value='2'>Staff</option>
+                  </select>
+                  
+                 
+                  <div class="input-group searchBundle ">
+                    <input  type="search" id='search-bar' class="form-control" placeholder="尋找..."/>
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default">Search</button>
+                    </span>
+                  </div>
+                </div>
+              </form>
+            </li>
+          </ul>
+     </li>
+</ul>
+
+
+      
+</div><!-- /.navbar-collapse -->
+
+</div><!-- /.container-fluid -->
+</nav>
+
+
+<div>
+<a ng-href="/" class="logo" target="_self"><img src="/img/logo/logo1.png"></a>
+<p ng-show="username != ''" class="user-header">
+  <img ng-src='{{usericon}}' alt="Can't see shit" class='membericon' id="membericon" ng-click='showProfile = !showProfile'>
+  <span class='membermenu' ng-show = showProfile><span class='triangle'></span>
+    歡迎, {{username}}
+    <br><br>
+    <a href='/profile' data-toggle="tooltip" data-placement="bottom" title="Hooray!">個人檔案</a>
+  </span>
+  
+  <a href="/login/logout">登出</a>
+</p>
+<p ng-show="username == ''" class="user-header"><a href="/login/">登入</a> <a href="/login/reg-page">註冊</a></p>
+
+<form id="search" onsubmit='searchingMobile()'>
+  <select class="search_cateria" name="search" id='searchOptMobile'>
+      <option value='0'>動畫</option>
+      <option value='1'>聲優</option>
+      <option value='2'>Staff</option>
+  </select>
+
+  <input type="search" id='search-bar'/><img src='/img/search.png' id='search-button' onclick='searchingMobile()' onmouseover='onHover(this)' onmouseout='onLeave(this)'/>
+</form>	
+
+<ul id="menu">
+  <li ng-repeat='e in currentSeason'><a target="_self" ng-href="/season/{{e.dateurl}}">{{e.datestring}}</a></li>
+  <li><a href="/season/all-season" target="_self">所有季度</a></li>
+</ul>
+</div>
+

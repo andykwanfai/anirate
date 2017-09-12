@@ -1,0 +1,288 @@
+html {
+	height: 100%;
+	overflow: auto;
+}
+
+body {
+	background-image: url(../img/login.jpg);
+	background-attachment: fixed;
+	max-width: 1200px;
+	width: 99%;
+	height: 100%;
+	padding: 0px;
+	margin: 0 auto;
+	font-size: 1.2em !important;
+	font-family: "malgun gothic", simhei !important;
+	text-overflow: ellipsis;
+}
+
+a {
+	text-decoration: none;
+	color: #2c3e50;
+}
+
+a:visited {
+	color: black;
+}
+
+a:hover {
+	/*color:#2980b9;*/
+	color: grey;
+}
+
+hr {
+	height: 0.7px;
+	background-color: rgba(189, 195, 199, 1.0);
+}
+
+.error {
+	font-size: 0.8em;
+	color: rgba(231, 76, 60, 1.0);
+}
+
+ul {
+	display: inline-block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.logo img {
+	max-width: 300px;
+	max-height: 100px;
+}
+
+#menu {
+	border-collapse: collapse;
+	text-align: center;
+	margin: 0 1px;
+}
+
+#menu li {
+	padding: 1px;
+	float: left;
+}
+
+#menu a:hover {
+	background-color: rgba(46, 204, 113, 1.0);
+	-webkit-transition: background-color 100ms linear;
+	-moz-transition: background-color 100ms linear;
+	-o-transition: background-color 100ms linear;
+	-ms-transition: background-color 100ms linear;
+	transition: background-color 100ms linear;
+}
+
+#menu a {
+	width: 200px;
+	height: 45px;
+	background-color: rgba(39, 174, 96, 1.0);
+	font-size: 30px;
+	color: white;
+	font-weight: bolder;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='search'],
+input[type='number'] {
+	border: 0px solid black;
+	width: 60%;
+	background-color: rgba(189, 195, 199, 0.9);
+	float: right;
+}
+
+input:focus,
+input:hover {
+	opacity: 0.6;
+}
+
+input[type='button'],
+input[type='submit'] {
+	border: 0px solid black;
+	display: block;
+	height: 8%;
+	width: 30%;
+	background-color: rgba(52, 152, 219, 1.0);
+	border-radius: 5px;
+	text-align: center;
+	font-family: "Yu Gothic", SimHei;
+	;
+	padding: 1% 12% 1%;
+	font-size: 1.4em;
+	margin: 0 auto;
+	float: clear;
+	color: white;
+	padding: 5px;
+}
+
+input[type='button']:hover,
+input[type='submit']:hover {
+	cursor: pointer;
+	background-color: #f1c40f;
+}
+
+input[type='button']:disabled,
+input[type='submit']:disabled {
+	cursor: pointer;
+	background-color: rgba(149, 165, 166, 1.0);
+}
+
+input[type='button'].large,
+input[type='submit'].large {
+	width: 70%;
+	margin-top: 10%;
+}
+
+input[type='button'].red {
+	border-radius: 25px;
+	margin: 0px;
+	height: 40px;
+	padding: 0.5%;
+	padding-top:0%;
+	font-size: 0.6em;
+	float: right;
+	width: 40px;
+	border: 1px solid white;
+	background-color: white;
+	color: rgba(41, 128, 185, 1);
+}
+
+input[type='button'].red:hover {
+	opacity: 0.8;
+}
+
+input[type='checkbox'] {
+	width: 30px;
+	height: 30px;
+}
+
+.title {
+	font-weight: bolder;
+	font-size: 1.3em;
+	margin-bottom: 0%;
+}
+
+.large-title {
+	margin-top: 0px;
+	font-weight: bolder;
+	font-size: 2.5em;
+	text-align: center;
+}
+
+.center {
+	text-align: center;
+}
+
+
+#tabContainer a,
+.ranking a {
+	display: inline-block;
+
+	margin: 1% auto;
+	text-align: center;
+}
+
+.rankingName{
+	margin: 0px 0px 0px 0px;
+}
+
+.errorMsg{
+	text-align:center;
+}
+
+@media screen and (max-width: 1207px) {
+	#menu li {
+		width: 155px;
+	}
+}
+
+@media screen and (max-width: 1050px) {
+	#search {
+		width: 100%;
+	}
+}
+
+@media (max-width: 768px) {
+	html {}
+	body {
+		margin: 52px 0px 0px 0px !important;
+		width: 100%;
+		height: auto;
+		overflow-x: hidden;
+	}
+	#tab {
+		font-size: 1.5em;
+		border-radius: 0px !important;
+		margin: 0px;
+		width: 43em;
+		/* 4 */
+		height: 30px;
+		overflow-y: hidden;
+	}
+	#tab li {
+		border-right: 1px solid white !important;
+		border-bottom: 1px solid white !important;
+		vertical-align: top;
+		width: 110px !important;
+		margin: 0.5% !important;
+		height: 1em;
+		display: inline-block;
+		/* 6 */
+		margin: 0px !important;
+	}
+	#tab:after {
+		/* 5 */
+		content: '';
+		display: inline-block;
+		width: 100%;
+	}
+	.mobileTabNav {
+		overflow-x: scroll;
+		/* 1 */
+		-webkit-overflow-scrolling: touch;
+		/* 2 */
+	}
+	.mobileSelect {
+		height: auto !important;
+		border-radius: 3px;
+		margin: 0px;
+	}
+	.title {
+		font-size: 2.5em;
+		text-align: center;
+		background-color: rgba(39, 174, 96, 1.0);
+		color: white;
+		width: 100%;
+		padding: 0.3em 0px;
+	}
+	.ranking {
+		background-color: transparent !important;
+	}
+	.ranking li {
+		background-color: transparent;
+		border: 0px solid black;
+		width: 20% !important;
+	}
+	#mainContainer {
+		padding: 0px !important;
+	}
+}
+
+@media all and (max-width: 768px) {
+	.mobileTabNav::-webkit-scrollbar {
+		display: none;
+	}
+	#tabContainer::-webkit-scrollbar {
+		width: 2em !important;
+	}
+}
+
+.error-img {
+	border-radius: 125px;
+	width: 250px;
+	height: 250px;
+	margin: 0 auto;
+}

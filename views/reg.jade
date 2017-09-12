@@ -1,0 +1,110 @@
+doctype html
+html
+  head
+    link(rel='stylesheet',media="(min-width: 768px)",  href='../css/main.css')
+    //link(rel='stylesheet', type='text/css', href='../css/header.css')
+    link(rel='stylesheet', href='../css/login.css')
+    meta(meta name="viewport" content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', media="only screen and (max-width: 768px)", type='text/css', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    meta(charset='utf-8')
+    title 用戶註冊
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    script(type='text/javascript', src='../js/reg-page.js')
+    style.
+  body
+    #mainContainer(ng-app='main', ng-controller='regCtrl')
+      #left-panel.panel
+        p.center
+            a(href='/')
+              img.title-img(src='../img/logo/logo2.png')
+      .trans-panel
+        form(action='', method='POST', name='regForm')
+          p
+            | 用戶名稱
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regForm.user_id.$dirty && !regForm.user_id.$invalid && !nameTaken' )
+            input(type='text', name='user_id', ng-model='user_id', ng-change='delayCheckName()', maxlength = "100", minlength = "1",required='')
+          p.error(ng-show='regForm.user_id.$dirty && regForm.user_id.$invalid') 用戶名包含不法字元!
+          p.error(ng-show='regForm.user_id.$dirty && nameTaken') 用戶名已被使用!
+  
+          p
+            | 密碼
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regForm.pw.$dirty && !regForm.pw.$invalid && !regForm.pw.$error.minlength')
+            input(type='password', name='pw', ng-model='pw', ng-minlength = '6', ng-pattern='/^[a-zA-Z0-9_]+$/', maxlength = "100",required='' )
+          p.error(ng-show='regForm.pw.$dirty && regForm.pw.$error.minlength') 密碼不能少於6字!
+          p.error(ng-show='regForm.pw.$dirty && regForm.pw.$error.pattern') 密碼只允許英文字,數字及下劃線(_)
+          p
+            | 密碼(再次輸入)
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regForm.pw.$dirty && regForm.pw2.$dirty && pw == pw2')
+            input(type='password', name='pw2', ng-model='pw2', required='')  
+          p.error(ng-show='regForm.pw.$dirty && regForm.pw2.$dirty && pw != pw2') 兩次輸入的密碼不相同!
+          p
+            | E-Mail
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regForm.email.$dirty && !regForm.email.$error.email && !emailTaken')
+            input(type='email', name='email', ng-model='email', ng-change='delayCheckEmail()', required='',  maxlength = "200")
+          p.error(ng-show='regForm.email.$dirty && regForm.email.$error.email') E-Mail 格式不正確!
+          p.error(ng-show='regForm.email.$dirty && emailTaken') E-Mail 已被註冊!
+          br
+          |                CAPTCHA : 輸入左方圖片數字
+          br
+          input(type='number', name='captcha', ng-model='captcha', ng-change='delayCheckCaptcha()', required='')
+          img#captchaImg(src='data:image/jpeg;base64,' + captcha, onclick='resendCaptcha()' ng-click='captcha="";captchaCorrect = null')
+          img(src='/img/reg-tick.png' class='reg-tick' ng-show='captchaCorrect')
+          p.error(ng-show='regForm.captcha.$dirty && !captchaCorrect') CAPTCHA 輸入錯誤
+          input.large(type='submit', value='提交', ng-disabled='regForm.user_id.$invalid || nameTaken || regForm.pw.$invalid || pw != pw2 ||  regForm.email.$error.email ||\
+          regForm.email.$error.required || regForm.user_id.$error.required || regForm.pw.$error.required ||\
+          regForm.pw2.$error.required || emailTaken || !captchaCorrect' ng-click='register();' onclick='return false;')
+      .mobileRegister
+        form(action='', method='POST', name='regFormMobile')
+          a(href='/') 
+            img(src='../img/logo/logo1.png')
+          p
+            | 
+            h4 用戶名稱:
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regFormMobile.user_id.$dirty && !regFormMobile.user_id.$invalid && !nameTaken')
+            input(type='text', name='user_id', ng-model='user_id', ng-change='delayCheckName()', required='', class="form-control", aria-describedby="basic-addon1")
+          p.error(ng-show='regFormMobile.user_id.$dirty && regFormMobile.user_id.$invalid') 用戶名包含不法字元!
+          p.error(ng-show='regFormMobile.user_id.$dirty && nameTaken') 用戶名已被使用!
+  
+          p
+            | 
+            h4 密碼:
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regFormMobile.pw.$dirty && !regFormMobile.pw.$invalid && !regFormMobile.pw.$error.minlength')
+            input(type='password', name='pw', ng-model='pw', ng-minlength = '6', ng-pattern='/^[a-zA-Z0-9_]+$/'  ，required='', class="form-control", aria-describedby="basic-addon1")
+          p.error(ng-show='regFormMobile.pw.$dirty && regFormMobile.pw.$error.minlength') 密碼不能少於6字!
+          p.error(ng-show='regFormMobile.pw.$dirty && regFormMobile.pw.$error.pattern') 密碼只允許英文字,數字及下劃線(_)
+          p
+            | 
+            h4 密碼(再次輸入):
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regFormMobile.pw.$dirty && regFormMobile.pw2.$dirty && pw == pw2')
+            input(type='password', name='pw2', ng-model='pw2', required='', class="form-control", aria-describedby="basic-addon1")  
+          p.error(ng-show='regFormMobile.pw.$dirty && regFormMobile.pw2.$dirty && pw != pw2') 兩次輸入的密碼不相同!
+          p
+            | 
+            h4 E-Mail:
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='regFormMobile.email.$dirty && !regFormMobile.email.$error.email && !emailTaken')
+            input(type='email', name='email', ng-model='email', ng-change='delayCheckEmail()', required='', class="form-control", aria-describedby="basic-addon1")
+          p.error(ng-show='regFormMobile.email.$dirty && regFormMobile.email.$error.email') E-Mail 格式不正確!
+          p.error(ng-show='regFormMobile.email.$dirty && emailTaken') E-Mail 已被註冊!
+          p
+            h4 CAPTCHA : 輸入圖片數字:
+            input(type='number', name='captcha', ng-model='captcha', ng-change='delayCheckCaptcha()', required='', class="form-control", aria-describedby="basic-addon1")
+            br
+            img#captchaImg(src='data:image/jpeg;base64,' + captcha, onclick='resendCaptcha()' ng-click='captcha="";captchaCorrect = null')
+            img(src='/img/reg-tick.png' class='reg-tick' ng-show='captchaCorrect')
+            p.error(ng-show='regFormMobile.captcha.$dirty && !captchaCorrect') CAPTCHA 輸入錯誤
+            input.large(type='submit', value='提交', class="btn btn-default mobileLoginButton ", ng-disabled='regFormMobile.user_id.$invalid || nameTaken || regFormMobile.pw.$invalid || pw != pw2 ||  regFormMobile.email.$error.email ||\
+            regFormMobile.email.$error.required || regFormMobile.user_id.$error.required || regFormMobile.pw.$error.required ||\
+            regFormMobile.pw2.$error.required || emailTaken || !captchaCorrect || regSuccess' ng-click='register();' onclick='return false;' )
+            h5 已經有帳號？
+            input.large(type='button', value='登入', class="btn btn-default mobileLoginButton ", onClick='window.location.href="/login/"')
+          
+      .panel.notuse
+        p#text-reg 註冊
+      #panel-reg-success.trans-panel.regSuccessMobile(ng-show='regSuccess')
+        p 註冊成功 !
+        br
+        input(type='button', class="btn btn-default mobileLoginButton ", value='Log In', onclick="location.href ='/login/'")
+        input(type='button', class="btn btn-default mobileLoginButton ", value='Back', onclick="location.href ='/'")
+    

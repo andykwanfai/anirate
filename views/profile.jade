@@ -1,0 +1,77 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='keywords', content='動畫 新番 評分 推薦 推介')
+    meta(meta name="viewport" content="width=device-width, initial-scale=1")
+    title AniRate 動畫評分網站
+    link(rel='stylesheet', type='text/css', href='../css/main.css')
+    link(rel='stylesheet', type='text/css', href='../css/header.css')
+    link(rel='stylesheet', type='text/css', href='../css/profile.css')
+    link(rel='stylesheet', media="only screen and (max-width: 768px)", type='text/css', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+     
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    script(src="../js/typeahead.min.js")
+    script(type='text/javascript', src="../js/search-test.js")
+  
+    script(type='text/javascript', src='../js/index-page.js')
+    script(type='text/javascript', src='../js/profile-page.js')
+    script(type='text/javascript', src='../js/heading.js')
+  body
+    div(ng-app='main')
+      header(ng-controller = 'headerCtrl' )
+        div(ng-include="'/html/header.html'")
+      .leftContainer
+        img(src='' + icon)
+        p
+          h2 名稱: 
+          h3!{username}
+          h2 註冊日期: 
+          h3!{reg_date}
+      .rightContainer(ng-controller ='main-ctrl')
+        form(name="editprofile", action="/", method="post")
+          h1 更改資料
+          p 舊密碼:
+            input#oldpassword(type="password", name="oldPassword" class='edit', ng-model='oldpw' required='' )
+          p.error(ng-show='passwordError') 舊密碼錯誤!
+          p 新密碼:
+            input#newpassword(type="password", name="newPassword" class='edit' ng-model='pw' ng-minlength = '6', ng-pattern='/^[a-zA-Z0-9_]+$/')
+          p.error(ng-show='editprofile.newPassword.$dirty && editprofile.newPassword.$error.pattern') 密碼只允許英文字,數字及下劃線(_)
+          p.error(ng-show='editprofile.newPassword.$dirty && oldpw == pw') 新密碼與舊密碼重覆!
+          p.error(ng-show='editprofile.newPassword.$error.minlength') 密碼長度最少6字
+          p 新密碼(再次輸入):
+            input#newpassword2(type="password", name="newPassword2" class='edit', ng-model='pw2' ng-minlength = '6', ng-pattern='/^[a-zA-Z0-9_]+$/')
+          p.error(ng-show='editprofile.newPassword.$dirty && editprofile.newPassword.$dirty && pw != pw2') 兩次輸入的密碼不相同!
+          p
+          p
+          input#alterPasswordbutton(type='submit' value='Save' ng-disabled = '(!oldpw && !pw && !pw2) || (pw != pw2) || (!pw && editprofile.newPassword.$invalid) || (!pw2 && editprofile.newPassword2.$invalid) || (oldpw == pw)'  ng-click='alterPassword();' onclick='return false')
+          hr
+          p Icon URL:
+            input#iconedit(type="text", name="newIcon" class='edit' placeholder='http://' ng-model='icon')
+          p    使用含色情,噁心的icon將會被bam
+          p(ng-show='changeApplied') 資料已更改!
+          p
+          br
+          input#alterIconbutton(type='submit' value='Save' ng-disabled = '!icon'  ng-click='alterIcon();' onclick='return false')
+          
+      .bottomContainer
+        h1 最近留言
+          hr
+          br
+          if(recent_post)
+            each comment in recent_post
+              h3
+                a(href='/anime/' + comment.aid) !{comment.anime_name}:
+                p 
+                  !{comment.post_date}
+                p !{comment.content}
+          else
+            p 你沒有留過言
+
+          
+    
+
+
+    

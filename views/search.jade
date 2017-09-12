@@ -1,0 +1,52 @@
+html
+  head
+    title AniRate 動畫投票網站
+    link(rel='stylesheet', type='text/css', href='/css/main.css')
+    meta(meta name="viewport" content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', type='text/css', href='/css/timetable.css')
+    link(rel='stylesheet', type='text/css', href='/css/season_list.css')
+    link(rel='stylesheet', type='text/css', href='/css/header.css')
+    link(rel='stylesheet', media="only screen and (max-width: 768px)", type='text/css', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
+    script(src="../js/typeahead.min.js")
+    script(type='text/javascript', src="../js/search-test.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    script.
+      var app = angular.module("main",[]);
+    script(type='text/javascript', src='/js/heading.js')
+  body(ng-app='main')
+    header(ng-controller='headerCtrl')
+      div(ng-include="'/html/header.html'")
+    #season-list-content
+      ul
+        p.title 搜尋結果 !{search}
+        if((anime && anime.length == 0) || (cv && cv.length == 0) || (staff && staff.length == 0))
+          p 對不起,搜尋不到你想要的結果!
+          p Result Not Found!
+        else
+          if(anime)
+            each e in anime
+              li.item.searchitem
+                a(href='/anime/' + e.id)
+                  img(src=e.sq_img_path)
+                  .info
+                    | !{e.name}
+                    br
+                    if(e.airedEpisode >= e.total_episode)
+                     已完結
+                    else
+                     放映至第 !{e.airedEpisode} 集
+          else if(cv)
+            each e in cv
+              li.item
+                a(href='/cv/'+ e.cvid)
+                  img(src=e.cv_img)
+                  .info
+                  | !{e.cvname}
+          else if(staff)
+            each e in staff
+              li.item
+                a(href='/staff/' + e.id)
+                  .info
+                  | !{e.name}

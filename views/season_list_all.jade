@@ -1,0 +1,36 @@
+html
+  head
+    title 所有季度
+    meta(meta name="viewport" content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', type='text/css', href='../css/main.css')
+    link(rel='stylesheet', type='text/css', href='../css/timetable.css')
+    link(rel='stylesheet', type='text/css', href='../css/season_list.css')
+    link(rel='stylesheet', type='text/css', href='../css/header.css')
+    link(rel='stylesheet', media="only screen and (max-width: 768px)", type='text/css', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
+    script(type='text/javascript', src='../js/season-list-all.js')
+    script(type='text/javascript', src='../js/heading.js')
+    script(type='text/javascript', src="../js/search-test.js")
+    script(src="../js/typeahead.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+    
+  body(ng-app='main')
+    header(ng-controller='headerCtrl')
+      div(ng-include="'/html/header.html'")
+    #season-list-content(ng-controller='all')
+      ul
+        each season in season_all
+            p.title.allSeasonTitle
+              a(href='/season/' + season.term)
+                | !{season.name}
+              input.expand(type='button' value='+' ng-click='expandSeason("' + season.term +'")')
+              .season-list
+                li.item(ng-repeat='e in animeList["' + season.term +'"]').allseasonInfo
+                  a(ng-href='/anime/{{e.id}}')
+                    img(ng-src='{{e.sq_img_path}}')
+                    .info
+                    {{e.name}}
+                    br
+                    評分: {{e.rating}}
+            
