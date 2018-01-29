@@ -39,7 +39,7 @@ function findById(id, fn) {
 }
 */
 
-function findByUsername(username,pw, fn) {
+function findByUsername(username, pw, fn) {
   /*
   for (var i = 0, len = users.length; i < len; i++) {
     var user = users[i];
@@ -69,21 +69,22 @@ function findByUsername(username,pw, fn) {
         fn(null,null);
       }
     }
-  });*///salt pw end
+  });*/ //salt pw end
   //console.log(statement);
   //console.log('name : ' + username+ "pw :" + pw);
-  var statement = "SELECT * FROM user where username = ?" ;
-  
-  connection.query(statement,[username.trim()],function(err,row,field){
-  //connection.query(statement,[username],function(err,row,field){
-    if(err) console.log(err);
-    else{
+  var statement = "SELECT * FROM user where username = ?";
+
+  connection.query(statement, [username.trim()], function(err, row, field) {
+    //connection.query(statement,[username],function(err,row,field){
+    if (err) console.log(err);
+    else {
       console.log(JSON.stringify(row));
-      if(row.length > 0 && bcrypt.compareSync(pw, row[0].password)){
+      if (row.length > 0 && bcrypt.compareSync(pw, row[0].password)) {
         //logginSuccess = true;
-        fn(null,row[0]);
-      }else{
-        fn(null,null);
+        fn(null, row[0]);
+      }
+      else {
+        fn(null, null);
       }
     }
   });
@@ -122,12 +123,15 @@ passport.use(new LocalStrategy(
 ));
 */
 
-router.get('/',function(req, res){
-  if(req.session.user_id)
-     //res.sendfile("./public/html/index.html");
-     res.redirect("/");
-  else
+router.get('/', function(req, res) {
+  if (req.session.user_id)
+    //res.sendfile("./public/html/index.html");
+    res.redirect("/");
+  else {
     res.sendfile("./public/html/login.html");
+    console.log("test!");
+
+  }
 });
 
 /*
@@ -137,32 +141,34 @@ router.post('/login',
     res.redirect('/ac');
   });
   */
-  
+
 router.post('/login', function(req, res, next) {
   //console.log("login info:" + JSON.stringify(req.body));
   var username = req.body.user_id;
   var pw = req.body.pw;
-  findByUsername(username,pw,function(err,user){
-    if(err) console.log(err);
-    else{
-      if(user){
-        if(user.bam == 0){
-        console.log("logged in " + username);
+  findByUsername(username, pw, function(err, user) {
+    if (err) console.log(err);
+    else {
+      if (user) {
+        if (user.bam == 0) {
+          console.log("logged in " + username);
           req.session.user_id = username;
-          res.writeHead(200,{"Content-Type" : "application/x-www-form-urlencoded"});
+          res.writeHead(200, { "Content-Type": "application/x-www-form-urlencoded" });
           res.end('');
-        }else{
-          res.writeHead(401,{"Content-Type" : "application/x-www-form-urlencoded"});
+        }
+        else {
+          res.writeHead(401, { "Content-Type": "application/x-www-form-urlencoded" });
           res.end('bam');
         }
-      }else{
+      }
+      else {
         console.log("no such user " + username);
-        res.writeHead(401,{"Content-Type" : "application/x-www-form-urlencoded"});
+        res.writeHead(401, { "Content-Type": "application/x-www-form-urlencoded" });
         res.end('');
       }
     }
   });
-  
+
   /*
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
@@ -173,38 +179,38 @@ router.post('/login', function(req, res, next) {
     });
   })(req, res, next);
   */
-  
+
 });
 
 var validcode = 0;
 
 router.get('/reg-page', function(req, res) {
-   var captcha = new Buffer(captchaImg()).toString('base64');   
-   req.session.captchaCode = validcode;
-   res.render('reg', {captcha : captcha});
+  var captcha = new Buffer(captchaImg()).toString('base64');
+  req.session.captchaCode = validcode;
+  res.render('reg', { captcha: captcha });
 });
 
-router.get('/logout', function(req, res){
+router.get('/logout', function(req, res) {
   delete req.session.user_id;
   res.redirect('/');
 });
 
 //regen captcha
-router.get('/captcha',function(req,res){
-   var captcha = new Buffer(captchaImg()).toString('base64');   
-   req.session.captchaCode = validcode;
-   res.writeHead(200,{"Content-Type" : "image/jpeg"});
-   res.end(captcha);
+router.get('/captcha', function(req, res) {
+  var captcha = new Buffer(captchaImg()).toString('base64');
+  req.session.captchaCode = validcode;
+  res.writeHead(200, { "Content-Type": "image/jpeg" });
+  res.end(captcha);
 });
 
-var captchaImg = function(){
-        validcode = parseInt(Math.random()*9000+1000);
-        var p = new captchapng(80,30,validcode); // width,height,numeric captcha
-        p.color(115, 95, 197, 100);  // First color: background (red, green, blue, alpha)
-        p.color(30, 104, 21, 255); // Second color: paint (red, green, blue, alpha)
-        var img = p.getBase64();
-        var imgbase64 = new Buffer(img,'base64');
-        return imgbase64;
-} 
+var captchaImg = function() {
+  validcode = parseInt(Math.random() * 9000 + 1000);
+  var p = new captchapng(80, 30, validcode); // width,height,numeric captcha
+  p.color(115, 95, 197, 100); // First color: background (red, green, blue, alpha)
+  p.color(30, 104, 21, 255); // Second color: paint (red, green, blue, alpha)
+  var img = p.getBase64();
+  var imgbase64 = new Buffer(img, 'base64');
+  return imgbase64;
+}
 
 module.exports = router;

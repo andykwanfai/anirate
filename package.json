@@ -1,6 +1,6 @@
 {
-  "name": "myapp",
-  "version": "0.0.0",
+  "name": "anirate",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -19,5 +19,22 @@
     "connect-flash": "*",
     "express-session": "*",
     "connect-redis": ""
-  }
+  },
+  "description": "an anime review website",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andykwanfai/anirate"
+  },
+  "keywords": [
+    "node.js",
+    "mysql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andykwanfai/anirate/issues"
+  },
+  "homepage": "https://github.com/andykwanfai/anirate"
 }

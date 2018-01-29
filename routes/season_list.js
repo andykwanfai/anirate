@@ -9,8 +9,10 @@ var statementGetCurrentSeason = 'select anime.*, user_follow.episode, user_follo
 
 // get current season list
 router.post('/current', function(req,res){
-  var season = utility.toSeasonStr(new Date());
-  var previousSeason = utility.toSeasonStr(new Date(new Date().getFullYear(),new Date().getMonth() - 3,new Date().getDate()));
+  //var season = utility.toSeasonStr(new Date());
+  //var previousSeason = utility.toSeasonStr(new Date(new Date().getFullYear(),new Date().getMonth() - 3,new Date().getDate()));
+  var season = "2015au";
+  var season = "2015su";
   //console.log(JSON.stringify(season));
   connection.query(statementGetCurrentSeason,[req.session.user_id,"%"+season+"%"],function(err, row,field) {
     if(err) console.log(err);
